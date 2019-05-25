@@ -10,12 +10,12 @@ namespace arcup
     {
         #region Constants
 
-        enum OPTIONS
+        public enum Options
         {
-            ERROR        = -1,
-            EXIT         = 0,
-            DOWNLOAD     = 1,
-            DOWNLOAD_ALL = 2
+            Error        = -1,
+            Exit         = 0,
+            Download     = 1,
+            DownloadAll  = 2
         }
 
         #endregion Constants
@@ -26,7 +26,8 @@ namespace arcup
         /// <summary>
         /// Shows the startup message for the application
         /// </summary>
-        public void Startup()
+        /// <param name="defaultOption">Default option</param>
+        public void Startup(Options defaultOption)
         {
             string header = string.Format(
                 "Welcome to ArcUp\n" +
@@ -38,10 +39,10 @@ namespace arcup
 
             Console.WriteLine(header);
 
-            // Waits for the user to introduce a valid value
-            int opt = -1;
+            // Waits for the user to introduce a valid value if default value was not given
+            int opt = (int)defaultOption;
 
-            while (opt == (int)OPTIONS.ERROR)
+            while (opt == (int)Options.Error)
             {
                 opt = ToInt(Console.ReadLine());
 
@@ -49,7 +50,7 @@ namespace arcup
                     Console.Error.WriteLine("Invalid value. Please try again");
             }
 
-            StartupCallback((OPTIONS)opt);
+            StartupCallback((Options)opt);
         }
 
 
@@ -57,21 +58,25 @@ namespace arcup
         /// Callback for the startup method after the user introduces an option
         /// </summary>
         /// <param name="opt">option to be executed. Available options are defined in the "OPTIONS" top-level enum</param>
-        private void StartupCallback(OPTIONS opt)
+        private void StartupCallback(Options opt)
         {
             switch (opt)
             {
-                case OPTIONS.EXIT:
+                case Options.Exit:
                     Environment.Exit(0);
                     break;
 
-                case OPTIONS.DOWNLOAD:
+                case Options.Download:
                     ArcUp.DownloadBin(ArcUp.ARC_DOWNLOAD_URL);
+
+                    ArcUp.StartGW2();
                     break;
 
-                case OPTIONS.DOWNLOAD_ALL:
+                case Options.DownloadAll:
                     ArcUp.DownloadBin(ArcUp.ARC_DOWNLOAD_URL);
                     ArcUp.DownloadBin(ArcUp.ARC_DOWNLOAD_URL_BUILD);
+
+                    ArcUp.StartGW2();
                     break;
             }
         }

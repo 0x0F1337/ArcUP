@@ -10,8 +10,13 @@ namespace arcup
     {
         static void Main(string[] args)
         {
+            int defaultOption = (int)UI.Options.DownloadAll;
+
+            if (args.Length == 1)
+                int.TryParse(args[0], out defaultOption);
+
             UI ui = new UI();
-            ui.Startup();
+            ui.Startup((UI.Options)defaultOption);
         }
 
     }

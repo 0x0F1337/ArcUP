@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace arcup
     {
         #region Constants
 
-        const string DLL_FILENAME       = "d3d9.dll";
-        const string DLL_FILENAME_BUILD = "d3d9_arcdps_buildtemplates.dll";
+
+        const string BIN_64_FOLDER = "bin64/";
 
         const string DATE_REGEXP = "<a href=\"d3d9\\.dll\">.+<\\/a> +(2[0-9]*-[0-1][0-9]-[0-3][0-9])";
 
@@ -70,7 +71,7 @@ namespace arcup
 
             using (BinaryReader br = new BinaryReader(req.GetResponse().GetResponseStream()))
             {
-                using (BinaryWriter bw = new BinaryWriter(File.Open(filename, FileMode.Create, FileAccess.Write)))
+                using (BinaryWriter bw = new BinaryWriter(File.Open(BIN_64_FOLDER + filename, FileMode.Create, FileAccess.Write)))
                 {
                     var chunk = br.ReadBytes(CHUNK_DOWNLOAD_SIZE);
 
@@ -83,6 +84,12 @@ namespace arcup
             }
 
             Console.WriteLine("Download completed");
+        }
+
+
+        public static void StartGW2()
+        {
+            Process.Start("Gw2-64.exe");
         }
 
         #endregion Methods
