@@ -8,20 +8,13 @@ namespace arcup
 {
     public class UI
     {
-        #region Constants
-
         public enum Options
         {
             Error        = -1,
             Exit         = 0,
             Download     = 1,
-            DownloadAll  = 2
         }
 
-        #endregion Constants
-
-
-        #region Methods
 
         /// <summary>
         /// Shows the startup message for the application
@@ -34,7 +27,6 @@ namespace arcup
                 "Latest version of ArcDps found: {0}\n\n" +
                 "Select an option to continue:\n" +
                 "1. Download latest version\n" +
-                "2. Download latest version (Build templates included)\n" +
                 "0. Exit", ArcUp.GetArcVersion().ToString("yyyy-MM-dd"));
 
             Console.WriteLine(header);
@@ -71,13 +63,6 @@ namespace arcup
 
                     ArcUp.StartGW2();
                     break;
-
-                case Options.DownloadAll:
-                    ArcUp.DownloadBin(ArcUp.ARC_DOWNLOAD_URL);
-                    ArcUp.DownloadBin(ArcUp.ARC_DOWNLOAD_URL_BUILD);
-
-                    ArcUp.StartGW2();
-                    break;
             }
         }
 
@@ -96,7 +81,5 @@ namespace arcup
 
             return output;
         }
-
-        #endregion Methods
     }
 }

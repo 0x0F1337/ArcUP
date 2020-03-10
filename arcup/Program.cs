@@ -10,7 +10,7 @@ namespace arcup
     {
         static void Main(string[] args)
         {
-            int defaultOption = (int)UI.Options.DownloadAll;
+            int defaultOption = (int)UI.Options.Download;
 
             if (args.Length == 1)
                 int.TryParse(args[0], out defaultOption);

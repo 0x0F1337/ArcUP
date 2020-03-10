@@ -13,9 +13,6 @@ namespace arcup
 {
     class ArcUp
     {
-        #region Constants
-
-
         const string BIN_64_FOLDER = "bin64/";
 
         const string DATE_REGEXP = "<a href=\"d3d9\\.dll\">.+<\\/a> +(2[0-9]*-[0-1][0-9]-[0-3][0-9])";
@@ -26,10 +23,6 @@ namespace arcup
 
         const int CHUNK_DOWNLOAD_SIZE = 1024;
 
-        #endregion Constants
-
-
-        #region Methods
 
         /// <summary>
         /// Gets the latest version (date) of ArcDPS found
@@ -91,8 +84,5 @@ namespace arcup
         {
             Process.Start("Gw2-64.exe");
         }
-
-        #endregion Methods
-
     }
 }
