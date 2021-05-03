@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,9 +16,6 @@ namespace arcup
     {
         const string BIN_64_FOLDER = "bin64/";
 
-        const string DATE_REGEXP = "<a href=\"d3d9\\.dll\">.+<\\/a> +(2[0-9]*-[0-1][0-9]-[0-3][0-9])";
-
-        const string ARC_REPO_URL                  = "https://www.deltaconnected.com/arcdps/x64/";
         public const string ARC_DOWNLOAD_URL       = "https://www.deltaconnected.com/arcdps/x64/d3d9.dll";
         public const string ARC_DOWNLOAD_URL_BUILD = "https://www.deltaconnected.com/arcdps/x64/buildtemplates/d3d9_arcdps_buildtemplates.dll";
 
@@ -28,23 +26,12 @@ namespace arcup
         /// Gets the latest version (date) of ArcDPS found
         /// </summary>
         /// <returns>Date of the latest version of ArcDps found in the page</returns>
-        public static DateTime GetArcVersion()
+        public static async Task<DateTime> GetArcVersion()
         {
-            DateTime arcDate = default(DateTime);
-            WebRequest req = WebRequest.Create(ARC_REPO_URL);
+            var client = new HttpClient();
+            var response = await client.GetAsync(ARC_DOWNLOAD_URL);
 
-            using (StreamReader sr = new StreamReader(req.GetResponse().GetResponseStream()))
-            {
-                string html = sr.ReadToEnd();
-
-                // Searches for the date in the HTML retrieved
-                Regex regxp = new Regex(DATE_REGEXP);
-                string date = regxp.Match(html).Groups[1].Value;
-
-                arcDate = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture); 
-            }
-
-            return arcDate;
+            return response.Content.Headers.LastModified.Value.Date;
         }
 
 

@@ -27,7 +27,7 @@ namespace arcup
                 "Latest version of ArcDps found: {0}\n\n" +
                 "Select an option to continue:\n" +
                 "1. Download latest version\n" +
-                "0. Exit", ArcUp.GetArcVersion().ToString("yyyy-MM-dd"));
+                "0. Exit", ArcUp.GetArcVersion().Result.ToString("yyyy-MM-dd"));
 
             Console.WriteLine(header);
 
